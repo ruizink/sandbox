@@ -1,0 +1,41 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: nginx-1-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - http-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /nginx-1
+    rewrite:
+      uri: "/"
+    route:
+    - destination:
+        port:
+          number: 9009
+        host: nginx-1-service
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: nginx-2-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - http-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /nginx-2
+    rewrite:
+      uri: "/"
+    route:
+    - destination:
+        port:
+          number: 9010
+        host: nginx-2-service
